@@ -12,6 +12,17 @@ ___
 
 **Purple Spells** est un outil tout-en-un pour la sécurité offensive. Il regroupe commandes, techniques et générateurs dans une interface web, organisée par onglets, avec des variables dynamiques qui s'injectent automatiquement dans toutes les commandes.
 
+| Main | Creds |
+|----------------|-------|
+| ![main](./_images/main.png) | ![creds](./_images/creds.png) |
+
+| Generator | Array tools |
+|-----------|-------------|
+| ![genereator](./_images/hydra-generator.png) | ![array](./_images/array-tools.png) |
+
+| Clear All | Search |
+|-----------|--------|
+| ![clear](./_images/clear-all.png) | ![search](./_images/search.png) |
 ___
 
 ## Fonctionnalités
