@@ -176,7 +176,6 @@ body.light-theme .search-box input {
 .logo-links .discord-link-wrap:hover .discord-name { color: var(--green); }
 .revshells-embed {
   width: 100%;
-  /* Tall enough that RevShells content fits with no scroll inside the iframe */
   height: 1150px;
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -209,6 +208,12 @@ body.light-theme .search-box input {
   border-color: var(--green-dark);
   box-shadow: 0 0 8px var(--green-glow);
 }
+
+.tfield.invalid {
+  border-color: var(--red) !important;
+  box-shadow: 0 0 8px var(--red-dim);
+}
+
 .target-bar label {
   font-size: 0.7em;
   color: var(--text-dim);
@@ -361,7 +366,7 @@ main {
   background: var(--bg);
   isolation: isolate;
   -webkit-overflow-scrolling: touch;
-  font-size: 15px; /* frozen: does not scale with zoom */
+  font-size: 15px;
 }
 .tabs::-webkit-scrollbar { height: 4px; }
 .tabs::before {
@@ -1393,6 +1398,7 @@ netexec winrm &lt;IP&gt; -u &lt;USER&gt; -p &lt;PASS&gt;
 netexec rdp &lt;IP&gt; -u &lt;USER&gt; -p &lt;PASS&gt;
 netexec mssql &lt;IP&gt; -u &lt;USER&gt; -p &lt;PASS&gt;
 netexec ssh &lt;IP&gt; -u &lt;USER&gt; -p &lt;PASS&gt;
+hydra -l &lt;USER&gt; -p &lt;PASS&gt; ftp://&lt;IP&gt;
 netexec ssh ip.txt -u &lt;USER&gt; -p '&lt;PASS&gt;' --key-dile id_rsa --port &lt;LPORT&gt;
 # Ne pas oublier en local
 nxc winrm &lt;IP&gt; -u &lt;USER&gt; -p '&lt;PASS&gt;' --local-auth</pre></div>
@@ -4002,20 +4008,48 @@ function initCredsVault() {
   renderCredsVault();
 }
 
-// Variable substitution
+// Variable substitution & Validation
 function initVarInputs() {
+  const ipRegex = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?:-(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))?$|^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:))$/;
+
   document.querySelectorAll('.target-bar input[data-vars]').forEach(input => {
     const vars = input.dataset.vars.split(',');
     const stored = localStorage.getItem('cs_' + input.id);
     if (stored) input.value = stored;
+
+    const validate = () => {
+      if (input.id === 'var-ip') {
+        const value = input.value.trim();
+        if (value !== "") {
+          const isValid = ipRegex.test(value);
+          input.parentElement.classList.toggle('invalid', !isValid);
+        } else {
+          input.parentElement.classList.remove('invalid');
+        }
+      }
+    };
+
+    if (input.value) {
+      vars.forEach(v => VAR_MAP[v] = input.value);
+    }
+    validate();
+
     input.addEventListener('input', () => {
       localStorage.setItem('cs_' + input.id, input.value);
       vars.forEach(v => VAR_MAP[v] = input.value);
       applySubstitutions();
+
+      if (input.id === 'var-ip') {
+          input.parentElement.classList.remove('invalid');
+      }
     });
-    if (input.value) vars.forEach(v => VAR_MAP[v] = input.value);
+
+    input.addEventListener('blur', () => {
+      validate();
+    });
   });
 }
+
 
 function applySubstitutions() {
   document.querySelectorAll('pre[data-template]').forEach(pre => {
