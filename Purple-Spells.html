@@ -1317,8 +1317,10 @@ body.light-theme .code-wrap pre { background: var(--bg4); }
     <div class="tfield"><label>NTLM</label><input type="text" id="var-ntlm" placeholder="hash" data-vars="NTHASH,NTLM_HASH"><button type="button" class="input-clear" data-for="var-ntlm" tabindex="-1">×</button></div>
     <div class="tfield"><label>LHOST</label><input type="text" id="var-lhost" placeholder="attacker ip" data-vars="LHOST,ATTACKER,ATTACKER_IP,attacker_ip,attacker_IP"><button type="button" class="input-clear" data-for="var-lhost" tabindex="-1">×</button></div>
     <div class="tfield"><label>LPORT</label><input type="text" id="var-lport" placeholder="443" data-vars="LPORT"><button type="button" class="input-clear" data-for="var-lport" tabindex="-1">×</button></div>
-    <div class="tfield" data-wide><label>WORDLIST</label><input type="text" id="var-wordlist" placeholder="rockyou.txt" data-vars="WORDLIST,wordlist,WORDLIST_FILE"><button type="button" class="input-clear" data-for="var-wordlist" tabindex="-1">×</button></div>
-    <div class="tfield" data-wide><label>DIRLIST</label><input type="text" id="var-dirlist" placeholder="DirBuster list" data-vars="DIRLIST,dirlist,DIRLIST_FILE"><button type="button" class="input-clear" data-for="var-dirlist" tabindex="-1">×</button></div>
+    <!-- <div class="tfield" data-wide><label>WORDLIST</label><input type="text" id="var-wordlist" placeholder="rockyou.txt" data-vars="WORDLIST,wordlist,WORDLIST_FILE"><button type="button" class="input-clear" data-for="var-wordlist" tabindex="-1">×</button></div>
+    <div class="tfield" data-wide><label>DIRLIST</label><input type="text" id="var-dirlist" placeholder="DirBuster list" data-vars="DIRLIST,dirlist,DIRLIST_FILE"><button type="button" class="input-clear" data-for="var-dirlist" tabindex="-1">×</button></div> -->
+    <div class="tfield" data-wide><label>WORDLIST</label><input type="text" id="var-wordlist" list="wordlist-presets" placeholder="rockyou.txt" data-vars="WORDLIST,wordlist,WORDLIST_FILE"><button type="button" class="input-clear" data-for="var-wordlist" tabindex="-1">×</button></div>
+    <div class="tfield" data-wide><label>DIRLIST</label><input type="text" id="var-dirlist" list="dirlist-presets" placeholder="DirBuster list" data-vars="DIRLIST,dirlist,DIRLIST_FILE"><button type="button" class="input-clear" data-for="var-dirlist" tabindex="-1">×</button></div>
   </div>
 </div>
 
@@ -4371,6 +4373,7 @@ initSearch();
 initHydraGen();
 initMsfvenomGen();
 initHashcatGen();
+
 // ===== COLLAPSE ALL =====
 function updateCollapseAllBtn() {
   const btn = document.getElementById('collapse-all-btn');
@@ -4383,6 +4386,7 @@ function collapseAllSections() {
   const panel = document.querySelector('.panel.active');
   if (!panel) return;
   panel.querySelectorAll('.section:not(.collapsed)').forEach(s => s.classList.add('collapsed'));
+  panel.querySelectorAll('.subsection:not(.collapsed)').forEach(s => s.classList.add('collapsed'));
   saveCollapsedState();
   updateCollapseAllBtn();
 }
@@ -4491,5 +4495,22 @@ initTheme();
 initFontSize();
 initNotes();
 </script>
+
+<datalist id="wordlist-presets">
+  <option value="/usr/share/wordlists/rockyou.txt">
+  <option value="/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt">
+  <option value="/usr/share/wordlists/dirb/common.txt">
+  <option value="/usr/share/wordlists/fasttrack.txt">
+</datalist>
+
+<datalist id="dirlist-presets">
+  <option value="/usr/share/wordlists/dirb/common.txt">
+  <option value="/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt">
+  <option value="/usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt">
+  <option value="/usr/share/seclists/Discovery/Web-Content/common.txt">
+  <option value="/usr/share/wordlists/dirb/big.txt">
+</datalist>
+
 </body>
 </html>
+
