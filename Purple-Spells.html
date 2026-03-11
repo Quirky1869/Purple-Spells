@@ -1397,6 +1397,7 @@ rustscan -a &lt;IP&gt; --ulimit 5000 --range 1-65535 -- -sV -Pn -sC -A > &lt;IP&
     <h3 class="sub-title">Spraying par services</h3>
     <div class="code-wrap"><pre data-template>netexec smb &lt;IP&gt; -u &lt;USER&gt; -p &lt;PASS&gt;
 netexec winrm &lt;IP&gt; -u &lt;USER&gt; -p &lt;PASS&gt;
+nxc winrm &lt;IP&gt; -u users.txt -H hash.hash
 netexec rdp &lt;IP&gt; -u &lt;USER&gt; -p &lt;PASS&gt;
 netexec mssql &lt;IP&gt; -u &lt;USER&gt; -p &lt;PASS&gt;
 netexec ssh &lt;IP&gt; -u &lt;USER&gt; -p &lt;PASS&gt;
