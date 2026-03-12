@@ -1362,7 +1362,11 @@ body.light-theme .code-wrap pre { background: var(--bg4); }
 sudo nmap -sS &lt;IP&gt;              # Stealth SYN scan
 nmap -sT &lt;IP&gt;                   # Full TCP connect scan
 sudo nmap -sU &lt;IP&gt;              # UDP scan
-sudo nmap -sU -sS &lt;IP&gt;          # Combo TCP/UDP</pre></div>
+sudo nmap -sU -sS &lt;IP&gt;          # Combo TCP/UDP
+sudo nmap -sU -Pn -p- --min-rate 1000 --max-retries 1 &lt;IP&gt;  -oN full_udp.txt     # Nmap UDP all ports
+sudo nmap -sU -T4 &lt;IP&gt; -oN txt.udp.nmap     # NMAP UDP LD
+nmap -sT -p- -T4 &lt;IP&gt; -oN txt.tcp.nmap     # NMAP TCP LD
+sudo nmap -sU -Pn --top-ports 100 &lt;IP&gt;       # Suppr top-ports si besoin</pre></div>
     <h3 class="sub-title">Network Discovery</h3>
     <div class="code-wrap"><pre data-template>nmap -sn 192.168.50.1-253        # Network Sweep
 nmap -sT -A &lt;IP&gt;                # Service &amp; Script Scan
@@ -4504,6 +4508,9 @@ initNotes();
   <option value="/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt">
   <option value="/usr/share/wordlists/dirb/common.txt">
   <option value="/usr/share/wordlists/fasttrack.txt">
+  <option value="/usr/share/wordlists/SecLists/Discovery/Web-Content/raft-largedirectories.txt">
+  <option value="/usr/share/seclists/Discovery/SNMP/snmp-onesixtyone.txt">
+
 </datalist>
 
 <datalist id="dirlist-presets">
