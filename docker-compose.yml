@@ -1,0 +1,29 @@
+services:
+    purple:
+        image:  nginx:1.29.6-alpine
+        networks:
+            custom_network:
+                ipv4_address: 192.168.99.99
+        dns:
+            - 192.168.99.1
+        volumes: 
+            - ./purple-spells/:/usr/share/nginx/html
+        ports:
+            - "9999:80"
+        command: >
+            /bin/sh -c "cp /usr/share/nginx/html/Purple-Spells.html /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"
+        container_name: purple_cont
+        hostname: purple
+
+
+networks:
+    custom_network:
+        name: purple-network
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+            - subnet: 192.168.99.0/24
+              gateway: 192.168.99.1
+
+# Go to : http://127.0.0.1:9999
