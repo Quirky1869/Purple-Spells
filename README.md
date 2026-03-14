@@ -73,6 +73,8 @@ ___
 
 ## Utilisation
 
+### Code source  
+
 ```bash
 # Cloner le repo
 git clone https://github.com/Quirky1869/purple-spells.git
@@ -87,14 +89,14 @@ google-chrome ./purple-spells/Purple-Spells.html
 
 > Fonctionne entièrement en local — aucune connexion requise (sauf l'iframe RevShells et les polices Google Fonts).
 
-<h2>  
+<h3>  
   Docker  
   <a href="https://www.docker.com/" target="_blank" rel="noreferrer">  
     <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg" alt="docker" width="40" height="40" style="vertical-align:middle;"/>  
   </a>  
-</h2>  
+</h3>  
 
-|Dockerfile|Docker compose|  
+|Docker (Dockerfile)|Docker compose (docker-compose.yml)|  
 |----------|--------------|
 |docker build . -t purple|  docker compose up  |
 |docker run -d -p 9999:80 purple||
