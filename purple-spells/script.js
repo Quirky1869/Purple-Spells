@@ -530,6 +530,12 @@ function applySubstitutions() {
     }
     pre.innerHTML = html;
   });
+  // On ne déclenche la coloration QUE sur le YAML
+  if (window.Prism) {
+    document.querySelectorAll('pre.language-yaml').forEach((block) => {
+      Prism.highlightElement(block);
+      });
+  }
 }
 
 function copyToClipboard(text) {

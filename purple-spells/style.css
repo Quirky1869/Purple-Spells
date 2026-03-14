@@ -663,6 +663,23 @@ main {
   tab-size: 4;
   border-radius: 0 5px 5px 0;
 }
+
+/* Style spécifique pour le bloc YAML coloré */
+.code-wrap pre.language-yaml {
+  background: #111 !important;
+  color: #ccc;
+  border-left: 3px solid var(--orange);
+  font-size: 0.85rem;
+  text-shadow: none;
+}
+.code-wrap pre.language-yaml .var-highlight {
+  background: rgba(255, 224, 102, 0.2);
+  color: var(--highlight) !important;
+  text-shadow: 0 0 5px var(--highlight);
+}
+/* End style spécifique pour le bloc YAML coloré */
+
+
 .code-wrap pre.lang-powershell { border-left-color: var(--blue); color: #8ad4ff; }
 .code-wrap pre.lang-sql { border-left-color: var(--yellow); color: #ffe888; }
 .code-wrap pre.lang-python { border-left-color: var(--purple); color: #cc99ff; }
