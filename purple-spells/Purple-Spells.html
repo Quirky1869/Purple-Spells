@@ -49,7 +49,7 @@
     <button type="button" class="collapse-all-btn" id="collapse-all-btn">↑ RÉDUIRE TOUT</button>
   </div>
   <div class="target-fields">
-    <div class="tfield"><label>IP</label><input type="text" id="var-ip" placeholder="10.10.10.x" data-vars="IP,TARGET,TARGET_IP,target_ip,ip"><button type="button" class="input-clear" data-for="var-ip" tabindex="-1">×</button></div>
+    <div class="tfield"><label>IP</label><input type="text" id="var-ip" placeholder="192.168.10.x" data-vars="IP,TARGET,TARGET_IP,target_ip,ip"><button type="button" class="input-clear" data-for="var-ip" tabindex="-1">×</button></div>
     <div class="tfield"><label>URL</label><input type="text" id="var-url" placeholder="http://target" data-vars="URL"><button type="button" class="input-clear" data-for="var-url" tabindex="-1">×</button></div>
     <div class="tfield"><label>DOMAIN</label><input type="text" id="var-domain" placeholder="corp.com" data-vars="DOMAIN,domain"><button type="button" class="input-clear" data-for="var-domain" tabindex="-1">×</button></div>
     <div class="tfield"><label>USER</label><input type="text" id="var-user" placeholder="admin" data-vars="USER,USERNAME"><button type="button" class="input-clear" data-for="var-user" tabindex="-1">×</button></div>
@@ -2455,7 +2455,7 @@ hostname && whoami && ipconfig && type C:\Users\Administrator\Desktop\proof.txt<
           <td><a href="https://github.com/brightio/penelope" target="_blank" rel="noopener">github.com/brightio/penelope</a></td>
           <td>
             <div class="download-container">
-              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="git clone https://github.com/brightio/penelope.git ; sudo cp penelope/penelope.py /usr/local/bin">Penelope Repo</span>
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="git clone https://github.com/brightio/penelope.git ; sudo cp penelope/penelope.py /usr/local/bin ; rm -rf penelope">Penelope</span>
             </div>
           </td>
         </tr>
