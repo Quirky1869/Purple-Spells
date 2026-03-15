@@ -2422,7 +2422,16 @@ hostname && whoami && ipconfig && type C:\Users\Administrator\Desktop\proof.txt<
           </td>
         </tr>
 
-        <tr><td>FFUF</td><td><a href="https://github.com/ffuf/ffuf" target="_blank" rel="noopener">github.com/ffuf/ffuf</a></td><td>—</td></tr>
+        <!-- FFUF -->
+        <tr>
+          <td>FUFF</td>
+          <td><a href="https://github.com/ffuf/ffuf" target="_blank" rel="noopener">github.com/ffuf/ffuf</a></td>
+          <td>
+            <div class="download-container">
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="mkdir -p ffuf && wget -qO- https://github.com/ffuf/ffuf/releases/download/v2.1.0/ffuf_2.1.0_linux_amd64.tar.gz | tar -xvz -C ffuf && sudo cp ffuf/ffuf /usr/local/bin && rm -rf ffuf">Fuff</span>
+              </div>
+          </td>
+        </tr>
 
         <!-- GOBUSTER -->
         <tr>
