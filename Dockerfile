@@ -6,7 +6,7 @@ RUN rm /usr/share/nginx/html/index.html
 RUN mv /usr/share/nginx/html/Purple-Spells.html /usr/share/nginx/html/index.html
 
 
-EXPOSE 80 65501
+EXPOSE 80 9999
 
 # docker build . -t purple
 # docker run -d -p 9999:80 purple
