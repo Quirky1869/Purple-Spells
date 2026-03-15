@@ -41,7 +41,7 @@ Persistent note-taking panel (button **NOTES**), saved in localStorage.
 Real-time search across all sections. `Escape` clears the search and restores the collapsed state.  
 
 ### 🧰 Array Tools
-A summary table of all tools referenced in the cheatsheet with their direct GitHub links (RustScan, LinPEAS, WinPEAS, BloodHound, Mimikatz, Impacket, Chisel, Ligolo-ng, Hydra, Hashcat, NetExec, Evil-WinRM, Responder, and others). Accessible via the **ARRAY TOOLS** button.  
+A summary table of all tools referenced in the cheatsheet with their direct GitHub links (RustScan, LinPEAS, WinPEAS, BloodHound, Mimikatz, Impacket, Chisel, Ligolo-ng, Hydra, Hashcat, NetExec, Evil-WinRM, Responder, and others). You can copy the commands to download or install the tools directly via the Download / Install column. Accessible via the **ARRAY TOOLS** button.  
 
 ### 🎨 Theme & Zoom
 - **Dark / light** theme (THEME button), persisted
@@ -105,4 +105,4 @@ ____
 
 ## Author
 
-Project developed by **Quirky**
+Project developed by **Quirky**  
