@@ -975,3 +975,96 @@ function copyDownloadCommand(element) {
     setTimeout(() => { element.innerText = old; }, 1000);
   });
 }
+
+// ===== CONSTELLATION BACKGROUND =====
+(function() {
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, points;
+  let mouse = { x: -9999, y: -9999 };
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function initPoints() {
+    const n = Math.min(500, Math.max(50, Math.floor((W * H) / 8000)));
+    points = Array.from({ length: n }, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+    }));
+  }
+
+  window.addEventListener('mousemove', e => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+  window.addEventListener('mouseleave', () => {
+    mouse.x = -9999;
+    mouse.y = -9999;
+  });
+  window.addEventListener('resize', () => { resize(); initPoints(); });
+
+  const CONNECT_DIST = 180;
+  const MOUSE_DIST = 200;
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    for (let p of points) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+    }
+
+    for (let i = 0; i < points.length; i++) {
+      for (let j = i + 1; j < points.length; j++) {
+        const dx = points[i].x - points[j].x;
+        const dy = points[i].y - points[j].y;
+        const d = Math.sqrt(dx*dx + dy*dy);
+        if (d < CONNECT_DIST) {
+          ctx.beginPath();
+          ctx.moveTo(points[i].x, points[i].y);
+          ctx.lineTo(points[j].x, points[j].y);
+          //  Défini les lignes entres les points
+          // ctx.strokeStyle = `rgba(200,180,255,${(1 - d/CONNECT_DIST) * 0.5})`;
+          ctx.strokeStyle = `rgba(150,150,160,${(1 - d/CONNECT_DIST) * 0.3})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      }
+      const mdx = points[i].x - mouse.x;
+      const mdy = points[i].y - mouse.y;
+      const md = Math.sqrt(mdx*mdx + mdy*mdy);
+      if (md < MOUSE_DIST) {
+        ctx.beginPath();
+        ctx.moveTo(points[i].x, points[i].y);
+        ctx.lineTo(mouse.x, mouse.y);
+        // Défini la couleur des lignes vers la souris
+        // ctx.strokeStyle = `rgba(220,200,255,${(1 - md/MOUSE_DIST) * 0.8})`;
+        ctx.strokeStyle = `rgba(180,180,190,${(1 - md/MOUSE_DIST) * 0.5})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+    }
+
+    for (let p of points) {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 2, 0, Math.PI*2);
+      // Défini la couleur des points
+      // ctx.fillStyle = 'rgba(160,160,170,0.5)';
+      ctx.fillStyle = 'rgba(123, 29, 255,0.3)';
+      (123, 29, 255);
+      ctx.fill();
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  initPoints();
+  draw();
+})();
