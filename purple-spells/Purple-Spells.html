@@ -2250,7 +2250,8 @@ python2 46501.py -t &lt;IP&gt; -p 8000 --break-on "java.net.ServerSocket.accept"
     <div class="code-wrap"><pre data-template># Config: /var/www/html/roundcube/config/config.inc.php
 # Session decrypt: DES3, key from config.inc.php (rcmail-!24ByteDESkey*Str)</pre></div>
     <h3 class="sub-title">PuTTY</h3>
-    <div class="code-wrap"><pre class="lang-powershell" data-template>reg query HKEY_CURRENT_USER\Software\SimonTatham\PuTTY\Sessions
+    <div class="code-wrap"><pre class="lang-powershell" data-template><a href="https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1552.002/T1552.002.md" target="_blank" rel="noopener noreferrer" class="code-link">Link GitHub</a>
+reg query HKEY_CURRENT_USER\Software\SimonTatham\PuTTY\Sessions
 # Per session: HostName, UserName (plaintext), PortNumber</pre></div>
     <h3 class="sub-title">XAMPP – Juicy files</h3>
     <div class="code-wrap"><pre data-template># Windows
