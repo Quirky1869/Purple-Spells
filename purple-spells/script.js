@@ -965,3 +965,13 @@ function initNotes() {
 initTheme();
 initFontSize();
 initNotes();
+
+function copyDownloadCommand(element) {
+  const command = element.getAttribute('data-cmd');
+  copyToClipboard(command).then(() => {
+    flash('Copié !');
+    const old = element.innerText;
+    element.innerText = 'COMMAND COPIED !';
+    setTimeout(() => { element.innerText = old; }, 1000);
+  });
+}

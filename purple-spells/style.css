@@ -1054,7 +1054,8 @@ code {
 .array-tools-panel {
   position: fixed;
   top: 0; right: 0;
-  width: 820px;
+  /* width: 820px; */
+  width: 1000px;
   max-width: 96vw;
   height: 100vh;
   background: var(--bg2);
@@ -1106,7 +1107,8 @@ code {
 }
 .array-tools-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   font-size: 0.88rem;
 }
 .array-tools-table thead tr th {
@@ -1120,22 +1122,42 @@ code {
   background: linear-gradient(to bottom, #9b30ff, #ff4dac);
   border: 1px solid #7b1dff;
   position: sticky;
-  top: 0;
-  z-index: 2;
+  top: -20px;
+  z-index: 10;
 }
+
 .array-tools-table tbody tr td {
   padding: 9px 18px;
   border: 1px solid var(--border);
   color: #fff;
   background: var(--bg2);
-  font-size: 0.88rem;
 }
+
 .array-tools-table tbody tr:hover td { background: var(--bg3); }
 .array-tools-table tbody tr td a {
   color: #aa55ff;
   text-decoration: none;
 }
 .array-tools-table tbody tr td a:hover { color: #ff4dac; text-decoration: underline; }
+
+/* Array copied */
+.download-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.download-cmd {
+  /* color: var(--cyan); */
+  color: var(--cyan);
+  cursor: pointer;
+  text-decoration: underline dotted;
+  font-size: 0.85rem;
+  transition: 0.2s;
+}
+.download-cmd:hover {
+  color: var(--highlight);
+  transform: translateX(3px);
+}
 
 /* ===== CLEAR ALL + COLLAPSE ALL ROW ===== */
 .action-row {

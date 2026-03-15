@@ -30,7 +30,7 @@
       <button type="button" id="font-minus" aria-label="Decrease font">−</button>
       <button type="button" id="font-plus" aria-label="Increase font">+</button>
     </span>
-    <button type="button" class="theme-toggle" id="theme-toggle" title="Toggle light/dark">THEME</button>
+    <!-- <button type="button" class="theme-toggle" id="theme-toggle" title="Toggle light/dark">THEME</button> -->
     <button type="button" class="notes-toggle" id="notes-toggle" title="Notes">NOTES</button>
     <div class="search-box">
       <input type="text" id="search" placeholder="Search...">
@@ -2287,37 +2287,182 @@ hostname && whoami && ipconfig && type C:\Users\Administrator\Desktop\proof.txt<
     <table class="array-tools-table">
       <thead>
         <tr>
-          <th>Nom</th>
-          <th>Lien</th>
-          <th>Lien Alternatif</th>
+          <th>Name</th>
+          <th>Link</th>
+          <th>Download / Install</th>
         </tr>
       </thead>
       <tbody>
-        <tr><td>RustScan</td><td><a href="https://github.com/RustScan/RustScan" target="_blank" rel="noopener">github.com/RustScan/RustScan</a></td><td>—</td></tr>
-        <tr><td>LinPEAS</td><td><a href="https://github.com/peass-ng/PEASS-ng/tree/master/linPEAS" target="_blank" rel="noopener">github.com/peass-ng/PEASS-ng — linPEAS</a></td><td>—</td></tr>
-        <tr><td>WinPEAS</td><td><a href="https://github.com/peass-ng/PEASS-ng/tree/master/winPEAS" target="_blank" rel="noopener">github.com/peass-ng/PEASS-ng — winPEAS</a></td><td>—</td></tr>
-        <tr><td>targetedKerberoast</td><td><a href="https://github.com/ShutdownRepo/targetedKerberoast" target="_blank" rel="noopener">github.com/ShutdownRepo/targetedKerberoast</a></td><td>—</td></tr>
-        <tr><td>Impacket</td><td><a href="https://github.com/fortra/impacket" target="_blank" rel="noopener">github.com/fortra/impacket</a></td><td>—</td></tr>
+
+        <!-- RUSTSCAN -->
+        <tr>
+          <td>RustScan</td>
+          <td><a href="https://github.com/RustScan/RustScan" target="_blank" rel="noopener">github.com/RustScan/RustScan</a></td>
+          <td>
+            <div class="download-container">
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="wget https://github.com/bee-san/RustScan/releases/download/2.4.1/x86-linux-rustscan.zip -O rustscan.zip && unzip rustscan.zip && rm rustscan.zip && sudo cp rustscan /usr/local/bin/rustscan && rm rustscan">Rustscan</span>
+              </div>
+          </td>
+        </tr>
+
+        <!-- LINPEAS -->
+        <tr>
+          <td>LinPEAS</td>
+          <td><a href="https://github.com/peass-ng/PEASS-ng/tree/master/linPEAS" target="_blank" rel="noopener">github.com/peass-ng/PEASS-ng/linPEAS</a></td>
+          <td>
+            <div class="download-container">
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="curl -L https://github.com/peass-ng/PEASS-ng/releases/latest/download/linpeas.sh -o linpeas.sh ; chmod u+x linpeas.sh">Download linpeas.sh</span>
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="curl -L https://github.com/peass-ng/PEASS-ng/releases/latest/download/linpeas.sh | sh">Execute linpeas.sh</span>
+              </div>
+          </td>
+        </tr>
+        
+        <!-- WINPEAS -->
+        <tr>
+          <td>WinPEAS</td>
+          <td><a href="https://github.com/peass-ng/PEASS-ng/tree/master/winPEAS" target="_blank" rel="noopener">github.com/peass-ng/PEASS-ng/winPEAS</a></td>
+          <td>
+            <div class="download-container">
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="curl -L https://github.com/peass-ng/PEASS-ng/releases/download/20260308-8a13be4d/winPEASx64.exe -o winpeas-x64.exe">Download winpeas-x64.exe</span>
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="curl -L https://github.com/peass-ng/PEASS-ng/releases/download/20260308-8a13be4d/winPEASx86.exe -o winpeas-x86.exe">Download winpeas-x86.exe</span>
+              </div>
+          </td>
+        </tr>
+
+        <!-- TARGETEDKERBEROAST -->
+        <tr>
+          <td>targetedKerberoast</td>
+          <td><a href="https://github.com/ShutdownRepo/targetedKerberoast" target="_blank" rel="noopener">github.com/ShutdownRepo/targetedKerberoast</a></td>
+          <td>
+            <div class="download-container">
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="git clone https://github.com/ShutdownRepo/targetedKerberoast">targetedKerberoast Repo</span>
+              </div>
+          </td>
+        </tr>
+
+        <!-- IMPACKET -->
+        <tr>
+          <td>Impacket</td>
+          <td><a href="https://github.com/fortra/impacket" target="_blank" rel="noopener">github.com/fortra/impacket</a></td>
+          <td>
+            <div class="download-container">
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="git clone https://github.com/fortra/impacket">Impacket Repo</span>
+              </div>
+          </td>
+        </tr>
+
+        <!-- BLOODHOUND -->
         <tr><td>BloodHound</td><td><a href="https://github.com/SpecterOps/BloodHound" target="_blank" rel="noopener">github.com/SpecterOps/BloodHound</a></td><td>—</td></tr>
         <tr><td>BloodHound.py (ingestor)</td><td><a href="https://github.com/dirkjanm/BloodHound.py" target="_blank" rel="noopener">github.com/dirkjanm/BloodHound.py</a></td><td>—</td></tr>
-        <tr><td>SharpHound</td><td><a href="https://github.com/BloodHoundAD/SharpHound" target="_blank" rel="noopener">github.com/BloodHoundAD/SharpHound</a></td><td>—</td></tr>
+        
+        <!-- SHARPHOUND -->
+        <tr>
+          <td>SharpHound</td>
+          <td><a href="https://github.com/BloodHoundAD/SharpHound" target="_blank" rel="noopener">github.com/BloodHoundAD/SharpHound</a></td>
+          <td>
+            <div class="download-container">
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="wget https://github.com/SpecterOps/SharpHound/releases/download/v2.10.0/SharpHound_v2.10.0_windows_x86.zip -O sharphound.zip && unzip sharphound.zip -d sharphound && rm sharphound.zip">SharpHound Repo</span>
+              </div>
+          </td>
+        </tr>
+        
         <tr><td>Responder</td><td><a href="https://github.com/lgandx/Responder" target="_blank" rel="noopener">github.com/lgandx/Responder</a></td><td>—</td></tr>
         <tr><td>Evil-WinRM</td><td><a href="https://github.com/Hackplayers/evil-winrm" target="_blank" rel="noopener">github.com/Hackplayers/evil-winrm</a></td><td>—</td></tr>
-        <tr><td>Evil-WinRM-py</td><td><a href="https://github.com/adityatelange/evil-winrm-py" target="_blank" rel="noopener">github.com/adityatelange/evil-winrm-py</a></td><td>—</td></tr>
+        
+        <!-- EVIL-WINRM-PY -->
+        <tr>
+          <td>Evil-WinRM-py</td>
+          <td><a href="https://github.com/adityatelange/evil-winrm-py" target="_blank" rel="noopener">github.com/adityatelange/evil-winrm-py</a></td>
+          <td>
+            <div class="download-container">
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="pipx install evil-winrm-py==1.5.0">Evil-WinRM-py Install (pipx)</span>
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="pip install evil-winrm-py==1.5.0">Evil-WinRM-py Install (pip)</span>
+              </div>
+          </td>
+        </tr>
+                
         <tr><td>Chisel</td><td><a href="https://github.com/jpillora/chisel" target="_blank" rel="noopener">github.com/jpillora/chisel</a></td><td>—</td></tr>
-        <tr><td>Ligolo-ng</td><td><a href="https://github.com/nicocha30/ligolo-ng" target="_blank" rel="noopener">github.com/nicocha30/ligolo-ng</a></td><td>—</td></tr>
-        <tr><td>Mimikatz</td><td><a href="https://github.com/gentilkiwi/mimikatz" target="_blank" rel="noopener">github.com/gentilkiwi/mimikatz</a></td><td>—</td></tr>
+        
+        <!-- LIGOLO -->
+        <tr>
+          <td>Ligolo-ng</td>
+          <td><a href="https://github.com/nicocha30/ligolo-ng" target="_blank" rel="noopener">github.com/nicocha30/ligolo-ng</a></td>
+          <td>
+            <div class="download-container">
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="mkdir -p ligolo-proxy-linux && wget -qO- https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.3/ligolo-ng_proxy_0.8.3_linux_amd64.tar.gz | tar -xvz -C ligolo-proxy-linux">Ligolo Proxy Linux</span>
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="wget https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.3/ligolo-ng_agent_0.8.3_windows_amd64.zip -O agent.zip && unzip agent.zip -d ligolo-agent-windows && rm agent.zip">Ligolo Agent Windows</span>
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="mkdir -p ligolo-agent-linux && wget -qO- https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.3/ligolo-ng_agent_0.8.3_linux_amd64.tar.gz | tar -xvz -C ligolo-agent-linux">Ligolo Agent Linux</span>
+            </div>
+          </td>
+        </tr>
+
+        <!-- MIMIKATZ -->
+        <tr>
+          <td>Mimikatz</td>
+          <td><a href="https://github.com/gentilkiwi/mimikatz" target="_blank" rel="noopener">github.com/gentilkiwi/mimikatz</a></td>
+          <td>
+            <div class="download-container">
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="wget https://github.com/gentilkiwi/mimikatz/releases/download/2.2.0-20220919/mimikatz_trunk.zip -O mimikatz.zip && unzip mimikatz.zip -d mimikatz && rm mimikatz.zip && cp mimikatz/x64/mimikatz.exe mimikatz/mimikatz-x64.exe && cp mimikatz/Win32/mimikatz.exe mimikatz/mimikatz-32.exe">Mimikatz Repo</span>
+            </div>
+          </td>
+        </tr>
+
         <tr><td>Certipy</td><td><a href="https://github.com/ly4k/Certipy" target="_blank" rel="noopener">github.com/ly4k/Certipy</a></td><td>—</td></tr>
         <tr><td>Kerbrute</td><td><a href="https://github.com/ropnop/kerbrute" target="_blank" rel="noopener">github.com/ropnop/kerbrute</a></td><td>—</td></tr>
         <tr><td>NetExec (nxc)</td><td><a href="https://github.com/Pennyw0rth/NetExec" target="_blank" rel="noopener">github.com/Pennyw0rth/NetExec</a></td><td>—</td></tr>
-        <tr><td>FeroxBuster</td><td><a href="https://github.com/epi052/feroxbuster" target="_blank" rel="noopener">github.com/epi052/feroxbuster</a></td><td>—</td></tr>
+
+        <!-- FEROXBUSTER -->
+        <tr>
+          <td>FeroxBuster</td>
+          <td><a href="https://github.com/epi052/feroxbuster" target="_blank" rel="noopener">github.com/epi052/feroxbuster</a></td>
+          <td>
+            <div class="download-container">
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="sudo apt update -y && sudo apt install -y feroxbuster">FeroxBuster Install</span>
+              </div>
+          </td>
+        </tr>
+
         <tr><td>FFUF</td><td><a href="https://github.com/ffuf/ffuf" target="_blank" rel="noopener">github.com/ffuf/ffuf</a></td><td>—</td></tr>
-        <tr><td>Gobuster</td><td><a href="https://github.com/OJ/gobuster" target="_blank" rel="noopener">github.com/OJ/gobuster</a></td><td>—</td></tr>
+
+        <!-- GOBUSTER -->
+        <tr>
+          <td>GoBuster</td>
+          <td><a href="https://github.com/OJ/gobuster" target="_blank" rel="noopener">github.com/OJ/gobuster</a></td>
+          <td>
+            <div class="download-container">
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="mkdir -p gobuster && wget -qO- https://github.com/OJ/gobuster/releases/download/v3.8.2/gobuster_Linux_x86_64.tar.gz | tar -xvz -C gobuster && sudo cp gobuster/gobuster /usr/local/bin && rm -rf gobuster">GoBuster</span>
+              </div>
+          </td>
+        </tr>
+
         <tr><td>Hashcat</td><td><a href="https://github.com/hashcat/hashcat" target="_blank" rel="noopener">github.com/hashcat/hashcat</a></td><td>—</td></tr>
         <tr><td>John the Ripper</td><td><a href="https://github.com/openwall/john" target="_blank" rel="noopener">github.com/openwall/john</a></td><td>—</td></tr>
+
         <tr><td>Hydra</td><td><a href="https://github.com/vanhauser-thc/thc-hydra" target="_blank" rel="noopener">github.com/vanhauser-thc/thc-hydra</a></td><td>—</td></tr>
-        <tr><td>penelope.py</td><td><a href="https://github.com/brightio/penelope" target="_blank" rel="noopener">github.com/brightio/penelope</a></td><td>—</td></tr>
-        <tr><td>PowerUp</td><td><a href="https://github.com/PowerShellMafia/PowerSploit/blob/master/Privesc/PowerUp.ps1" target="_blank" rel="noopener">github.com/PowerShellMafia/PowerSploit — PowerUp</a></td><td>—</td></tr>
+        
+        <!-- PENELOPE -->
+        <tr>
+          <td>Penelope</td>
+          <td><a href="https://github.com/brightio/penelope" target="_blank" rel="noopener">github.com/brightio/penelope</a></td>
+          <td>
+            <div class="download-container">
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="git clone https://github.com/brightio/penelope.git ; sudo cp penelope/penelope.py /usr/local/bin">Penelope Repo</span>
+            </div>
+          </td>
+        </tr>
+
+        <!-- POWERUP -->
+        <tr>
+          <td>PowerUp</td>
+          <td><a href="https://github.com/PowerShellMafia/PowerSploit/blob/master/Privesc/PowerUp.ps1" target="_blank" rel="noopener">github.com/PowerShellMafia/PowerUp.ps1</a></td>
+          <td>
+            <div class="download-container">
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="wget https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/refs/heads/master/Privesc/PowerUp.ps1 -O PowerUp.ps1">Download on Linux</span>
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="iwr -Uri 'https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Privesc/PowerUp.ps1' -OutFile 'PowerUp.ps1'">Download on Windows</span>
+            </div>
+          </td>
+        </tr>
+
         <tr><td>pspy</td><td><a href="https://github.com/DominicBreuker/pspy" target="_blank" rel="noopener">github.com/DominicBreuker/pspy</a></td><td>—</td></tr>
         <tr><td>enum4linux-ng</td><td><a href="https://github.com/cddmp/enum4linux-ng" target="_blank" rel="noopener">github.com/cddmp/enum4linux-ng</a></td><td>—</td></tr>
         <tr><td>Metasploit Framework</td><td><a href="https://github.com/rapid7/metasploit-framework" target="_blank" rel="noopener">github.com/rapid7/metasploit-framework</a></td><td>—</td></tr>
@@ -2326,7 +2471,8 @@ hostname && whoami && ipconfig && type C:\Users\Administrator\Desktop\proof.txt<
       </tbody>
     </table>
   </div>
-</div><!-- /array-tools-panel -->
+</div>
+<!-- /array-tools-panel -->
 
 
 <div class="flash" id="flash-msg"></div>
@@ -2357,6 +2503,7 @@ hostname && whoami && ipconfig && type C:\Users\Administrator\Desktop\proof.txt<
   <div class="creds-vault-list" id="creds-vault-list"></div>
 </div>
 
+<!-- WORDLIST - Data List -->
 <datalist id="wordlist-presets">
   <option value="/usr/share/wordlists/rockyou.txt">
   <option value="/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt">
@@ -2367,6 +2514,7 @@ hostname && whoami && ipconfig && type C:\Users\Administrator\Desktop\proof.txt<
 
 </datalist>
 
+<!-- DIRLIST - Data List -->
 <datalist id="dirlist-presets">
   <option value="/usr/share/wordlists/dirb/common.txt">
   <option value="/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt">
