@@ -1245,6 +1245,12 @@ code {
 }
 .confirm-ok-btn:hover { background: var(--red); color: #fff; }
 
+/* INPUT IP */
+
+#var-ip {
+  width: 130px;
+}
+
 /* ===== INPUT CLEAR CROSS ===== */
 .tfield { position: relative; }
 .tfield .input-clear {
