@@ -2,13 +2,13 @@
 
 ![](./_images/purple-spells.png)  
 
-Une cheatsheet offensif et interactif, conçu pour les pentesters et les passionnés de CTF.  
+An offensive cheatsheet and interactive tool, designed for pentesters and CTF enthusiasts.  
 
 ___  
 
-## Aperçu
+## Overview
 
-**Purple Spells** est un outil tout-en-un pour la sécurité offensive. Il regroupe commandes, techniques et générateurs dans une interface web, organisée par onglets, avec des variables dynamiques qui s'injectent automatiquement dans toutes les commandes.  
+**Purple Spells** is an all-in-one tool for offensive security. It brings together commands, techniques and generators in a web interface, organized by tabs, with dynamic variables that are automatically injected into all commands.  
 
 | Main | Creds |
 |----------------|-------|
@@ -16,47 +16,47 @@ ___
 
 | Generator | Array tools |
 |-----------|-------------|
-| ![genereator](./_images/hydra-generator.png) | ![array](./_images/array-tools.png) |
+| ![generator](./_images/hydra-generator.png) | ![array](./_images/array-tools.png) |
 
 | Clear All | Search |
 |-----------|--------|
 | ![clear](./_images/clear-all.png) | ![search](./_images/search.png) |
 ___  
 
-## Fonctionnalités
+## Features
 
-### 🎯 Barre de variables dynamiques
-Renseigne une fois tes variables cibles en haut de l'interface (IP, URL, DOMAIN, USER, PASS, NTLM, LHOST, LPORT, WORDLIST, DIRLIST) — elles se substituent automatiquement dans **toutes** les commandes du cheatsheet.  
+### 🎯 Dynamic Variable Bar
+Enter your target variables once at the top of the interface (IP, URL, DOMAIN, USER, PASS, NTLM, LHOST, LPORT, WORDLIST, DIRLIST) — they are automatically substituted into **all** commands in the cheatsheet.  
 
 ### 🔐 Creds Vault
-Panneau latéral dédié au stockage des credentials récoltés (source, user, domain, pass, NTLM hash, note). Le bouton **USE** injecte directement les creds dans la barre de variables. Export CSV disponible.  
+A dedicated side panel for storing harvested credentials (source, user, domain, pass, NTLM hash, note). The **USE** button directly injects credentials into the variable bar. CSV export available.  
 
-### ⭐ Favoris
-Chaque section et sous-section peut être mise en favori (★). L'onglet **FAVORITES** liste tous tes favoris pour un accès instantané. Persisté en localStorage.  
+### ⭐ Favorites
+Each section and sub-section can be bookmarked (★). The **FAVORITES** tab lists all your favorites for instant access. Persisted in localStorage.  
 
 ### 📝 Notes
-Panneau de prise de notes persistant (bouton **NOTES**), sauvegardé en localStorage.  
+Persistent note-taking panel (button **NOTES**), saved in localStorage.  
 
-### 🔍 Recherche
-Recherche en temps réel dans toutes les sections. `Escape` efface la recherche et restaure l'état replié.  
+### 🔍 Search
+Real-time search across all sections. `Escape` clears the search and restores the collapsed state.  
 
 ### 🧰 Array Tools
-Tableau récapitulatif de tous les outils référencés dans le cheatsheet avec leurs liens GitHub directs (RustScan, LinPEAS, WinPEAS, BloodHound, Mimikatz, Impacket, Chisel, Ligolo-ng, Hydra, Hashcat, NetExec, Evil-WinRM, Responder, et d'autres). Accessible via le bouton **ARRAY TOOLS**.  
+A summary table of all tools referenced in the cheatsheet with their direct GitHub links (RustScan, LinPEAS, WinPEAS, BloodHound, Mimikatz, Impacket, Chisel, Ligolo-ng, Hydra, Hashcat, NetExec, Evil-WinRM, Responder, and others). Accessible via the **ARRAY TOOLS** button.  
 
-### 🎨 Thème & zoom
-- Thème **dark / light** (bouton THEME), persisté
-- Ajustement de la taille de police **− / +** (12–20px), persisté
+### 🎨 Theme & Zoom
+- **Dark / light** theme (THEME button), persisted
+- Font size adjustment **− / +** (12–20px), persisted
 
-### 🛠️ Générateurs de commandes intégrés
-- **Hydra** — brute-force avec sélection de protocole, credentials, form data
-- **MSFvenom** — génération de payload (type, format, LHOST, LPORT, fichier de sortie)
-- **Hashcat** — crack de hash (mode, fichier, wordlist, règles, --force)
+### 🛠️ Built-in Command Generators
+- **Hydra** — brute-force with protocol selection, credentials, form data
+- **MSFvenom** — payload generation (type, format, LHOST, LPORT, output file)
+- **Hashcat** — hash cracking (mode, file, wordlist, rules, --force)
 
 ___  
 
-## Onglets
+## Tabs
 
-| Onglet | Contenu |
+| Tab | Content |
 |---|---|
 | **ENUMERATION** | Nmap, RustScan, Password Spraying |
 | **WEB** | Dir Enum, SQLi, XSS, LFI/RFI, File Upload, Command Injection |
@@ -65,29 +65,28 @@ ___
 | **LIN PRIVESC** | SUID, Sudo, Cron, Capabilities, etc. |
 | **AD ATTACKS** | Kerberoasting, AS-REP, Pass-the-Hash/Ticket, BloodHound, DCSync, Lateral Movement (nxc, PsExec, WMI, DCOM, RDP…) |
 | **NETWORKING** | Ping/Port sweep, Tunneling (SSH, Ligolo, Chisel, dnscat2) |
-| **TOOLS** | RevShells (iframe), générateurs Hydra / MSFvenom / Hashcat |
-| **MISC** | Divers |
-| **★ FAVORITES** | Toutes tes sections favorites |
+| **TOOLS** | RevShells (iframe), Hydra / MSFvenom / Hashcat generators |
+| **MISC** | Miscellaneous |
+| **★ FAVORITES** | All your favorited sections |
 
 ___  
 
-## Utilisation
+## Usage
 
-### Code source  
-
+### Source Code  
 ```bash
-# Cloner le repo
+# Clone the repo
 git clone https://github.com/Quirky1869/purple-spells.git
 
-# Ouvrir le fichier dans ton navigateur
+# Open the file in your browser
 xdg-open ./purple-spells/Purple-Spells.html
-# ou
+# or
 firefox ./purple-spells/Purple-Spells.html
-# ou
+# or
 google-chrome ./purple-spells/Purple-Spells.html
 ```
 
-> Fonctionne entièrement en local — aucune connexion requise (sauf l'iframe RevShells et les polices Google Fonts).
+> Works entirely locally — no connection required (except the RevShells iframe and Google Fonts).
 
 <h3>  
   Docker  
@@ -100,11 +99,10 @@ google-chrome ./purple-spells/Purple-Spells.html
 |----------|--------------|
 |docker build . -t purple|  docker compose up  |
 |docker run -d -p 9999:80 purple||
-|docker rmi purple||
 
 Go to : http://127.0.0.1:9999  
 ____  
 
-## Auteur
+## Author
 
-Projet développé par **Quirky**  
+Project developed by **Quirky**
