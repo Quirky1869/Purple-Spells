@@ -93,39 +93,6 @@
 </div>
 
 <!-- ===================== ENUMERATION ===================== -->
-<!-- <div class="panel active" id="panel-enum">
-
-<div class="section" id="s-nmap">
-  <div class="section-header" onclick="toggleSection(this)">
-    <div class="section-header-left"><span class="section-icon">&#9660;</span><span class="section-title">NMAP</span><span class="section-tag">SCANNING</span></div>
-  </div>
-  <div class="section-body">
-    <h3 class="sub-title">Scan Types</h3>
-    <div class="code-wrap"><pre data-template>nmap &lt;IP&gt; port/port-range
-sudo nmap -sS &lt;IP&gt;              # Stealth SYN scan
-nmap -sT &lt;IP&gt;                   # Full TCP connect scan
-sudo nmap -sU &lt;IP&gt;              # UDP scan
-sudo nmap -sU -sS &lt;IP&gt;          # Combo TCP/UDP
-sudo nmap -sU -Pn -p- --min-rate 1000 --max-retries 1 &lt;IP&gt;  -oN full_udp.txt     # Nmap UDP all ports
-sudo nmap -sU -T4 &lt;IP&gt; -oN txt.udp.nmap     # NMAP UDP LD
-nmap -sT -p- -T4 &lt;IP&gt; -oN txt.tcp.nmap     # NMAP TCP LD
-sudo nmap -sU -Pn --top-ports 100 &lt;IP&gt;       # Suppr top-ports si besoin</pre></div>
-    <h3 class="sub-title">Network Discovery</h3>
-    <div class="code-wrap"><pre data-template>nmap -sn 192.168.50.1-253        # Network Sweep
-nmap -sT -A &lt;IP&gt;                # Service &amp; Script Scan
-nmap -sV -A &lt;IP&gt;                # Service Scan</pre></div>
-    <h3 class="sub-title">Detection &amp; Scripts</h3>
-    <div class="code-wrap"><pre data-template>sudo nmap -O &lt;IP&gt; --osscan-guess                # OS detection
-nmap -sV &lt;IP&gt;                                   # Service detection
-sudo nmap -sV -p 443 --script "vuln" &lt;IP&gt;       # Vuln script scan
-nmap -v -sn 192.168.50.1-253 -oG ping-sweep.txt  # Export greppable</pre></div>
-    <h3 class="sub-title">NSE Scripts</h3>
-    <div class="code-wrap"><pre data-template>ls /usr/share/nmap/scripts/
-nmap --script-help http-headers
-nmap --script http-headers &lt;IP&gt;</pre></div>
-  </div>  
-</div> -->
-
 <div class="panel active" id="panel-enum">
 
 <div class="section" id="s-nmap">
@@ -2408,6 +2375,29 @@ hostname && whoami && ipconfig && type C:\Users\Administrator\Desktop\proof.txt<
           <td>
             <div class="download-container">
               <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="git clone https://github.com/fortra/impacket">Impacket Repo</span>
+              </div>
+          </td>
+        </tr>
+
+        <!-- BLOODYAD -->
+        <tr>
+          <td>BloodyAD</td>
+          <td><a href="https://github.com/CravateRouge/bloodyAD" target="_blank" rel="noopener">github.com/CravateRouge/bloodyAD</a><br><br>
+          <a href="https://seriotonctf.github.io/BloodyAD-Cheatsheet/" target="_blank" rel="noopener">Cheatsheet BloodyAD</a></td>
+          <td>
+            <div class="download-container">
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="git clone https://github.com/CravateRouge/bloodyAD.git">BloodyAD Repo</span>
+            </div>
+          </td>
+        </tr>
+
+        <!-- PRIVHOUND -->
+        <tr>
+          <td>PrivHound</td>
+          <td><a href="https://github.com/dazzyddos/PrivHound" target="_blank" rel="noopener">https://github.com/dazzyddos/PrivHound</a></td>
+          <td>
+            <div class="download-container">
+              <span class="download-cmd" onclick="copyDownloadCommand(this)" data-cmd="git clone https://github.com/dazzyddos/PrivHound.git">PrivHound Repo</span>
               </div>
           </td>
         </tr>
