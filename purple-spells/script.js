@@ -476,6 +476,106 @@ function initCredsVault() {
 }
 
 // Variable substitution & Validation
+// function initVarInputs() {
+//   const ipRegex = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?:-(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))?$|^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:))$/;
+
+//   document.querySelectorAll('.target-bar input[data-vars]').forEach(input => {
+//     const vars = input.dataset.vars.split(',');
+//     const stored = localStorage.getItem('cs_' + input.id);
+//     if (stored) input.value = stored;
+
+//     const validate = () => {
+//       if (input.id === 'var-ip') {
+//         const value = input.value.trim();
+//         if (value !== "") {
+//           const isValid = ipRegex.test(value);
+//           input.parentElement.classList.toggle('invalid', !isValid);
+//         } else {
+//           input.parentElement.classList.remove('invalid');
+//         }
+//       }
+//     };
+
+//     if (input.value) {
+//       vars.forEach(v => VAR_MAP[v] = input.value);
+//     }
+//     validate();
+
+//     input.addEventListener('input', () => {
+//       localStorage.setItem('cs_' + input.id, input.value);
+//       vars.forEach(v => VAR_MAP[v] = input.value);
+//       applySubstitutions();
+
+//       if (input.id === 'var-ip') {
+//           input.parentElement.classList.remove('invalid');
+//       }
+//     });
+
+//     input.addEventListener('blur', () => {
+//       validate();
+//     });
+//   });
+// }
+
+// Vérifie si le combo User/Pass/Hash actuel est déjà présent dans le Vault
+function updateVaultBtnVisibility() {
+  const user = document.getElementById('var-user')?.value.trim() || '';
+  const pass = document.getElementById('var-pass')?.value.trim() || '';
+  const ntlm = document.getElementById('var-ntlm')?.value.trim() || '';
+  const btn = document.getElementById('add-to-vault-btn');
+
+  if (!btn) return;
+
+  // Si tous les champs sont vides, on cache le bouton
+  if (!user && !pass && !ntlm) {
+    btn.classList.remove('visible');
+    return;
+  }
+
+  const creds = getCreds();
+  // On cherche si un credential identique existe déjà
+  const exists = creds.some(c => 
+    (c.user || '') === user && 
+    (c.pass || '') === pass && 
+    (c.ntlm || '') === ntlm
+  );
+
+  // Le bouton n'apparaît que si les données sont nouvelles
+  btn.classList.toggle('visible', !exists);
+}
+
+// Ajoute les données de la barre cible au Creds Vault
+function addQuickCred() {
+  const user = document.getElementById('var-user')?.value.trim() || '';
+  const pass = document.getElementById('var-pass')?.value.trim() || '';
+  const ntlm = document.getElementById('var-ntlm')?.value.trim() || '';
+  const domain = document.getElementById('var-domain')?.value.trim() || '';
+  const ip = document.getElementById('var-ip')?.value.trim() || '';
+
+  const source = domain || ip || 'Quick Add';
+
+  const cred = {
+    id: user || source || 'cred-' + Date.now(),
+    source: source,
+    user,
+    domain,
+    pass,
+    ntlm,
+    note: 'Added from target bar',
+    ts: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+  };
+
+  const creds = getCreds();
+  creds.unshift(cred);
+  setCreds(creds);
+  updateVaultBtnVisibility(); // Cache le bouton après l'ajout réussi
+  flash('Credential saved to vault!');
+}
+
+// Initialisation du clic (à mettre à la fin de ton fichier)
+document.getElementById('add-to-vault-btn')?.addEventListener('click', addQuickCred);
+
+
 function initVarInputs() {
   const ipRegex = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?:-(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))?$|^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:))$/;
 
@@ -500,11 +600,17 @@ function initVarInputs() {
       vars.forEach(v => VAR_MAP[v] = input.value);
     }
     validate();
+    
+    // --- AJOUT : Vérification initiale au chargement ---
+    updateVaultBtnVisibility(); 
 
     input.addEventListener('input', () => {
       localStorage.setItem('cs_' + input.id, input.value);
       vars.forEach(v => VAR_MAP[v] = input.value);
       applySubstitutions();
+
+      // --- AJOUT : Mise à jour de la visibilité du bouton à chaque saisie ---
+      updateVaultBtnVisibility(); 
 
       if (input.id === 'var-ip') {
           input.parentElement.classList.remove('invalid');
@@ -1068,3 +1174,60 @@ function copyDownloadCommand(element) {
   initPoints();
   draw();
 })();
+
+// FUNCTION TO BUTTON SAVE CREDS
+// Vérifie si le combo User/Pass/Hash actuel est déjà dans le Vault
+function updateVaultBtnVisibility() {
+  const user = document.getElementById('var-user')?.value.trim() || '';
+  const pass = document.getElementById('var-pass')?.value.trim() || '';
+  const ntlm = document.getElementById('var-ntlm')?.value.trim() || '';
+  const btn = document.getElementById('add-to-vault-btn');
+
+  if (!btn) return;
+
+  // Si les 3 champs sont vides, on ne propose rien
+  if (!user && !pass && !ntlm) {
+    btn.classList.remove('visible');
+    return;
+  }
+
+  const creds = getCreds();
+  // On vérifie si une entrée identique existe déjà
+  const exists = creds.some(c => 
+    (c.user || '') === user && 
+    (c.pass || '') === pass && 
+    (c.ntlm || '') === ntlm
+  );
+
+  // Affiche le bouton seulement si le combo est nouveau
+  btn.classList.toggle('visible', !exists);
+}
+
+// Ajoute les infos de la barre cible directement au Vault
+function addQuickCred() {
+  const user = document.getElementById('var-user')?.value.trim() || '';
+  const pass = document.getElementById('var-pass')?.value.trim() || '';
+  const ntlm = document.getElementById('var-ntlm')?.value.trim() || '';
+  const domain = document.getElementById('var-domain')?.value.trim() || '';
+  const ip = document.getElementById('var-ip')?.value.trim() || '';
+
+  // On utilise le domaine ou l'IP comme source
+  const source = domain || ip || 'Quick Add';
+
+  const cred = {
+    id: user || source || 'cred-' + Date.now(),
+    // source: source,
+    user,
+    domain,
+    pass,
+    ntlm,
+    note: 'Added from target bar',
+    ts: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+  };
+
+  const creds = getCreds();
+  creds.unshift(cred);
+  setCreds(creds);
+  updateVaultBtnVisibility(); // Cache le bouton après l'ajout
+  flash('Cred added to vault!');
+}
