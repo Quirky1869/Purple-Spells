@@ -16,7 +16,7 @@ ___
 
 | Generator | Array tools |
 |-----------|-------------|
-| ![generator](./_images/hydra-generator.png) | ![array](./_images/array-tools.png) |
+| ![generator](./_images/generator.png) | ![array](./_images/array-tools.png) |
 
 | Clear All | Search |
 |-----------|--------|
