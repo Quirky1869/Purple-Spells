@@ -14,7 +14,7 @@ services:
             /bin/sh -c "cp /usr/share/nginx/html/Purple-Spells.html /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"
         container_name: purple_cont
         hostname: purple
-
+        restart: unless-stopped
 
 #networks:
 #    custom_network:
