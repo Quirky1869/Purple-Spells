@@ -28,6 +28,43 @@
 ## Go to : http://127.0.0.1:9998
 
 ### Avec Traefik ###
+#services:
+#    purple:
+#        image:  nginx:1.29.6-alpine
+#        networks:
+#            - traefik-net
+##            custom_network:
+##                ipv4_address: 192.168.99.99
+##        dns:
+##            - 192.168.99.1
+#        volumes: 
+#            - ./purple-spells/:/usr/share/nginx/html
+#        ports:
+#            - "9998:80"   # accès direct de secours (IP:port), le temps de mettre en place Technitium
+#        command: >
+#            /bin/sh -c "cp /usr/share/nginx/html/Purple-Spells.html /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"
+#        container_name: purple_cont
+#        hostname: purple
+#        restart: unless-stopped
+#        labels:
+#            - "traefik.enable=true"
+#            - "traefik.http.routers.purple-spells.rule=Host(`purple-spells.lab`)"
+#            - "traefik.http.services.purple-spells.loadbalancer.server.port=80"
+#
+#networks:
+#    traefik-net:
+#        external: true
+##    custom_network:
+##        name: purple-network
+##        driver: bridge
+##        ipam:
+##            driver: default
+##            config:
+##            - subnet: 192.168.99.0/24
+##              gateway: 192.168.99.1
+## Go to : http://127.0.0.1:9998 ou http://purple-spells.lab
+
+### Avec mkcert ###
 services:
     purple:
         image:  nginx:1.29.6-alpine
@@ -48,9 +85,11 @@ services:
         restart: unless-stopped
         labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.purple-spells.rule=Host(`purple-spells.lab`)"
+            - "traefik.http.routers.purple-spells.rule=Host(`purple-spells.home.lab`)"
+            - "traefik.http.routers.purple-spells.entrypoints=websecure"
+            - "traefik.http.routers.purple-spells.tls=true"
             - "traefik.http.services.purple-spells.loadbalancer.server.port=80"
-
+ 
 networks:
     traefik-net:
         external: true
@@ -62,4 +101,4 @@ networks:
 #            config:
 #            - subnet: 192.168.99.0/24
 #              gateway: 192.168.99.1
-# Go to : http://127.0.0.1:9998 ou http://purple-spells.lab
+# Go to : http://127.0.0.1:9998 ou https://purple-spells.home.lab
